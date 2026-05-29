@@ -11,7 +11,7 @@ namespace HexcrawlGame.PCs
         public int Level { get; set; }
         public int Experience { get; set; }
         public int Health { get; set; }
-        public string Inventory { get; set; }
+        public List<string> Inventory { get; set; }
 
         // Moved into the class to avoid CS0116. Marked static/readonly so it's shared and immutable.
         public static readonly Dictionary<string, string> classes = new()

@@ -83,4 +83,4 @@ while (confirmClass == null)
         chosenClass = null; // Reset chosen class to allow re-selection
     }
     else Console.WriteLine("Please enter a valid choice.");
-};
+}
