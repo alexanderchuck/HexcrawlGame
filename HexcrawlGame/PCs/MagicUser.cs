@@ -6,5 +6,7 @@ namespace HexcrawlGame.PCs
 {
     internal class MagicUser
     {
+        // Attack Matrix
+        // Saving Throws
     }
 }

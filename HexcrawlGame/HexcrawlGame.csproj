@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Environment\" />
-    <Folder Include="Time\" />
+    <Folder Include="Armor\" />
+    <Folder Include="Items\" />
+    <Folder Include="Weapons\" />
   </ItemGroup>
 
 </Project>

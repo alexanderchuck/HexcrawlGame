@@ -4,11 +4,11 @@ using System.Text;
 
 namespace HexcrawlGame.PCs
 {
-    internal class PlayerCharacter
+    public class PlayerCharacter
     {
-        // Name
+        // Name        
+        // Character Class
         // Level
-        // Class
         // Attributes
         // Savings Throws
         // Attack Matrix

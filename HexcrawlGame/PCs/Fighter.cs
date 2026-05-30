@@ -6,5 +6,7 @@ namespace HexcrawlGame.PCs
 {
     internal class Fighter
     {
+        // Attack Matrix
+        // Saving Throws
     }
 }

@@ -6,5 +6,7 @@ namespace HexcrawlGame.PCs
 {
     internal class Cleric
     {
+        // Attack Matrix
+        // Saving Throws
     }
 }
