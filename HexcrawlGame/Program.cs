@@ -52,7 +52,24 @@ if (confirmStart == false)
     Environment.Exit(0);
 }
 
-Console.WriteLine("The world of Aldon appears to be waking up, as the residents of Saddlebrook begin to go about their morning routines. Before you leave town, let's go over some character details...");
+Console.WriteLine("The world of Aldon appears to be waking up, as the residents of Saddlebrook begin to go about their morning routines. " +
+    "Before you leave town, let's go over some character details...");
+Console.WriteLine();
+
+Console.WriteLine("First, we'll need to determine your attribute scores. There are six attributes in total: Strength, Intelligence, Wisdom, Constitution, Dexterity and Charisma. " +
+    "Each attribute has a possible score range of 3-18, with Strength, Intelligence and Wisdom being prime requisites for some of the classes we'll get to next.");
+Console.WriteLine();
+
+var attributeList = primaryCharacter.attributes.Keys.ToList();
+Random attributeScore = new Random();
+foreach (var attribute in attributeList)
+{
+    Console.WriteLine(attribute + ": " + (primaryCharacter.attributes[attribute] = attributeScore.Next(3, 19)));
+}
+Console.WriteLine();
+
+Console.WriteLine("When choosing your class, keep in mind that Fighters rely on Strength as their prime requisite, Magic-Users rely on Intelligence and Clerics rely on Wisdom."
+    + "While this does not affect in-game class performance, prime requisites determine whether a bonus or penalty is applied to experience points earned.");
 Console.WriteLine();
 
 Console.WriteLine("Which class best describes you?");
@@ -67,7 +84,7 @@ while (chosenClass == null)
     foreach (var characterClass in BaseCharacter.classes)
     {
         Console.WriteLine(num + ". " + characterClass.Key);
-        num += 1;
+        num++;
     }
     var response = Console.ReadKey(true).Key;
     if (response == ConsoleKey.D1 || response == ConsoleKey.NumPad1)
