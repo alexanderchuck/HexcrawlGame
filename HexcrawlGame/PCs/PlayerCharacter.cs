@@ -6,18 +6,19 @@ namespace HexcrawlGame.PCs
 {
     public class PlayerCharacter
     {
-        // Name        
-        // Character Class
-        // Level
-        // Attributes
-        // Savings Throws
-        // Attack Matrix
-        // HP
-        // AC
-        // Experience
-        // Weapon
+        // Name ✔️
+        // Attributes ✔️
+        // Character Class ✔️
+        // Level ✔️
+        // Alignment ✔️
+        // HP ✔️
         // Armor
         // Shield
+        // AC
+        // Experience ✔️
+        // Weapon
+        // Savings Throws
+        // Attack Matrix
         // Inventory
         // Spells?
     }
