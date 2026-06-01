@@ -20,12 +20,18 @@ namespace HexcrawlGame.PCs
         public int Level { get; set; } = 1;
         public string Alignment { get; set; }
         public int Health { get; set; }
+        public Dictionary<string, int> currency { get; set; } = new Dictionary<string, int>()
+        {
+            { "GP", 0 },
+            { "SP", 0 },
+            { "CP", 0 }
+        };
+        public string[] EquippedWeapon { get; set; } = Array.Empty<string>();
+        public string[] EquippedArmor { get; set; } = Array.Empty<string>();
         public int ArmorClass { get; set; }
-        public int Experience { get; set; } = 0;
-        public string EquippedWeapon { get; set; }
-        public string EquippedArmor { get; set; }
         public bool ShieldEquipped { get; set; }
-        public Dictionary<string, int> inventory { get; set; } = new Dictionary<string, int>();
+        public int Experience { get; set; } = 0;
+        public Dictionary<string, int?> inventory { get; set; } = new Dictionary<string, int?>();
 
         // Moved into the class to avoid CS0116. Marked static/readonly so it's shared and immutable.
         public static readonly Dictionary<string, string> classes = new()
@@ -38,7 +44,7 @@ namespace HexcrawlGame.PCs
         public static readonly Dictionary<string, string> alignment = new()
         {
             {"Lawful", "Lawful"},
-            { "Neutral", "Neutral"},
+            {"Neutral", "Neutral"},
             {"Chaotic", "Chaotic"}
         };
     }

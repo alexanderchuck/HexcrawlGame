@@ -27,18 +27,26 @@ namespace HexcrawlGame.PCs
         };
 
         public static readonly int[] ExpToLevel = 
-            {
-                1500, // Level 2
-                3000, // Level 3
-                6000, // Level 4
-                12000, // Level 5
-                25000, // Level 6
-                50000, // Level 7
-                90000, // Level 8
-                160000, // Level 9
-                240000, // Level 10
-                320000, // Level 11
-                400000, // Level 12
-            };
+        {
+            1500, // Level 2
+            3000, // Level 3
+            6000, // Level 4
+            12000, // Level 5
+            25000, // Level 6
+            50000, // Level 7
+            90000, // Level 8
+            160000, // Level 9
+            240000, // Level 10
+            320000, // Level 11
+            400000, // Level 12
+        };
+
+        public static readonly Dictionary<string, int> StartingArmor = new()
+        {
+            {"Unarmored", 0 },
+            {"Leather", 10 },
+            {"Chainmail", 35 },
+            {"Plate", 100 },
+        };
     }
 }

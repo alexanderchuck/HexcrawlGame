@@ -162,14 +162,13 @@ while (chosenClass == null)
 Console.WriteLine("Alright then. The world can always use another Level " + primaryCharacter.Level + " " + primaryCharacter.CharacterClass + "!");
 Console.WriteLine();
 
-Console.WriteLine("How would you describe your alignment?");
-Console.WriteLine();
-
 // Loop to allow player to choose an alignment from the list of available alignments. Exits loop once a valid alignment is chosen.
 bool? chosenAlignment = null;
 var alignmentList = BaseCharacter.alignment.Keys.ToList();
-while (chosenAlignment == null)
+while (chosenAlignment == null && primaryCharacter.CharacterClass != "Cleric")
 {
+    Console.WriteLine("How would you describe your alignment?");
+    Console.WriteLine();
     int num = 1;
     foreach (var alignment in alignmentList)
     {
@@ -208,9 +207,16 @@ while (chosenAlignment == null)
     }
 }
 
+if (primaryCharacter.CharacterClass == "Cleric")
+{
+    primaryCharacter.Alignment = alignmentList[0];
+    Console.WriteLine("Clerics are bound to a " + primaryCharacter.Alignment + " way of life.");
+    Console.WriteLine();
+}
+
 // Loop to confirm chosen alignment. Exits loop once player confirms or denies their alignment choice.
 bool? confirmAlignment = null;
-while (confirmAlignment == null)
+while (confirmAlignment == null && primaryCharacter.CharacterClass != "Cleric")
 {
     Console.WriteLine("Are you sure this the alignment you want?");
     Console.WriteLine();
@@ -253,6 +259,7 @@ if (primaryCharacter.CharacterClass == "Fighter")
 
     primaryCharacter.Health = fighterHD[primaryCharacter.Level - 1].Value;
     Console.WriteLine("HP: " + primaryCharacter.Health);
+    Console.WriteLine();
 }
 else if (primaryCharacter.CharacterClass == "Cleric")
 {
@@ -261,6 +268,7 @@ else if (primaryCharacter.CharacterClass == "Cleric")
 
     primaryCharacter.Health = clericHD[primaryCharacter.Level - 1].Value;
     Console.WriteLine("HP: " + primaryCharacter.Health);
+    Console.WriteLine();
 }
 else if (primaryCharacter.CharacterClass == "Magic-User")
 {
@@ -269,5 +277,272 @@ else if (primaryCharacter.CharacterClass == "Magic-User")
 
     primaryCharacter.Health = magicUserHD[primaryCharacter.Level - 1].Value;
     Console.WriteLine("HP: " + primaryCharacter.Health);
+    Console.WriteLine();
+}
+
+// Generates 3d6 * 10 starting gold pieces for the player character.
+Console.WriteLine("Now it's time to count the money in your coin purse.");
+Console.WriteLine();
+var currentGold = new Random().Next(30, 181);
+primaryCharacter.currency["GP"] = currentGold;
+Console.WriteLine("You upturn the leather pouch and find " + currentGold + " gold pieces.");
+Console.WriteLine("That coin isn't going to spend itself. Let's buy some gear!");
+Console.WriteLine();
+
+Console.WriteLine("Weapons and armor are essential for Clerics and Fighters, but alas, Magic-Users have traded security for a menagerie of arcane tricks." +
+    "Which piece of armor would you like to purchase?");
+Console.WriteLine();
+
+// Looping over and displaying items available in the appropriate Character Class starting armor dictionary.
+// Depending on starting gold, armor can be purchased and appended to the EquippedArmor array.
+// If there is enough gold leftover, users will have the option to buy a shield that is also appended.
+bool? chosenArmor = null;
+var clericArmor = Cleric.StartingArmor.ToList();
+var fighterArmor = Fighter.StartingArmor.ToList();
+var magicUserArmor = MagicUser.StartingArmor.ToList();
+while (chosenArmor == null && primaryCharacter.CharacterClass != "Magic-User")
+{
+    int num = 1;
+    if (primaryCharacter.CharacterClass == "Cleric")
+    {
+        foreach (var armor in clericArmor)
+        {
+            Console.WriteLine(num + ". " + armor);
+            num++;
+        }
+        var response = Console.ReadKey(true).Key;
+        if (response == ConsoleKey.D1 || response == ConsoleKey.NumPad1)
+        {
+                chosenArmor = true;
+                primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(clericArmor[0].Key).ToArray();
+                Console.WriteLine();
+        }
+        else if (response == ConsoleKey.D2 || response == ConsoleKey.NumPad2)
+        {
+            if (primaryCharacter.currency["GP"] >= clericArmor[1].Value)
+            {
+                chosenArmor = true;
+                primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(clericArmor[1].Key).ToArray();
+                primaryCharacter.currency["GP"] -= clericArmor[1].Value;
+                Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                Console.WriteLine();
+                if (primaryCharacter.currency["GP"] >= 15)
+                {
+                    Console.WriteLine("Would you like to purchase a shield for 15 GP?");
+                    Console.WriteLine();
+                    Console.WriteLine("Press 'Y' if yes or 'N' if not.");
+                    Console.WriteLine();
+                    var purchaseShieldResponse = Console.ReadKey(true).Key;
+                    if (purchaseShieldResponse == ConsoleKey.Y)
+                    {
+                        primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
+                        primaryCharacter.currency["GP"] -= 15;
+                        Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                        Console.WriteLine();
+                    }
+                    else if (purchaseShieldResponse == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                }
+            }
+            else Console.WriteLine("You don't have quite enough coin for this purchase.");
+            Console.WriteLine();
+        }
+        else if (response == ConsoleKey.D3 || response == ConsoleKey.NumPad3)
+        {
+            if (primaryCharacter.currency["GP"] >= clericArmor[2].Value)
+            {
+                chosenArmor = true;
+                primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(clericArmor[2].Key).ToArray();
+                primaryCharacter.currency["GP"] -= clericArmor[2].Value;
+                Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                Console.WriteLine();
+                if (primaryCharacter.currency["GP"] >= 15)
+                {
+                    Console.WriteLine("Would you like to purchase a shield for 15 GP?");
+                    Console.WriteLine();
+                    Console.WriteLine("Press 'Y' if yes or 'N' if not.");
+                    Console.WriteLine();
+                    var purchaseShieldResponse = Console.ReadKey(true).Key;
+                    if (purchaseShieldResponse == ConsoleKey.Y)
+                    {
+                        primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
+                        primaryCharacter.currency["GP"] -= 15;
+                        Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                        Console.WriteLine();
+                    }
+                    else if (purchaseShieldResponse == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                }
+            }
+            else Console.WriteLine("You don't have quite enough coin for this purchase.");
+            Console.WriteLine();
+        }
+        else if (response == ConsoleKey.D4 || response == ConsoleKey.NumPad3)
+        {
+            if (primaryCharacter.currency["GP"] >= clericArmor[3].Value)
+            {
+                chosenArmor = true;
+                primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(clericArmor[3].Key).ToArray();
+                primaryCharacter.currency["GP"] -= clericArmor[3].Value;
+                Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                Console.WriteLine();
+                if (primaryCharacter.currency["GP"] >= 15)
+                {
+                    Console.WriteLine("Would you like to purchase a shield for 15 GP?");
+                    Console.WriteLine();
+                    Console.WriteLine("Press 'Y' if yes or 'N' if not.");
+                    Console.WriteLine();
+                    var purchaseShieldResponse = Console.ReadKey(true).Key;
+                    if (purchaseShieldResponse == ConsoleKey.Y)
+                    {
+                        primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
+                        primaryCharacter.currency["GP"] -= 15;
+                        Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                        Console.WriteLine();
+                    }
+                    else if (purchaseShieldResponse == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                }
+            }
+            else Console.WriteLine("You don't have quite enough coin for this purchase.");
+            Console.WriteLine();
+        }
+
+        else Console.WriteLine("Please enter a valid choice.");
+    }
+
+    if (primaryCharacter.CharacterClass == "Fighter")
+    {
+        foreach (var armor in fighterArmor)
+        {
+            Console.WriteLine(num + ". " + armor);
+            num++;
+        }
+        var response = Console.ReadKey(true).Key;
+        if (response == ConsoleKey.D1 || response == ConsoleKey.NumPad1)
+        {
+            chosenArmor = true;
+            primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(fighterArmor[0].Key).ToArray();
+            Console.WriteLine();
+        }
+        else if (response == ConsoleKey.D2 || response == ConsoleKey.NumPad2)
+        {
+            if (primaryCharacter.currency["GP"] >= fighterArmor[1].Value)
+            {
+                chosenArmor = true;
+                primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(fighterArmor[1].Key).ToArray();
+                primaryCharacter.currency["GP"] -= fighterArmor[1].Value;
+                Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                Console.WriteLine();
+                if (primaryCharacter.currency["GP"] >= 15)
+                {
+                    Console.WriteLine("Would you like to purchase a shield for 15 GP?");
+                    Console.WriteLine();
+                    Console.WriteLine("Press 'Y' if yes or 'N' if not.");
+                    Console.WriteLine();
+                    var purchaseShieldResponse = Console.ReadKey(true).Key;
+                    if (purchaseShieldResponse == ConsoleKey.Y)
+                    {
+                        primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
+                        primaryCharacter.currency["GP"] -= 15;
+                        Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                        Console.WriteLine();
+                    }
+                    else if (purchaseShieldResponse == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                }
+            }
+            else Console.WriteLine("You don't have quite enough coin for this purchase.");
+            Console.WriteLine();
+        }
+        else if (response == ConsoleKey.D3 || response == ConsoleKey.NumPad3)
+        {
+            if (primaryCharacter.currency["GP"] >= fighterArmor[2].Value)
+            {
+                chosenArmor = true;
+                primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(fighterArmor[2].Key).ToArray();
+                primaryCharacter.currency["GP"] -= fighterArmor[2].Value;
+                Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                Console.WriteLine();
+                if (primaryCharacter.currency["GP"] >= 15)
+                {
+                    Console.WriteLine("Would you like to purchase a shield for 15 GP?");
+                    Console.WriteLine();
+                    Console.WriteLine("Press 'Y' if yes or 'N' if not.");
+                    Console.WriteLine();
+                    var purchaseShieldResponse = Console.ReadKey(true).Key;
+                    if (purchaseShieldResponse == ConsoleKey.Y)
+                    {
+                        primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
+                        primaryCharacter.currency["GP"] -= 15;
+                        Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                        Console.WriteLine();
+                    }
+                    else if (purchaseShieldResponse == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                }
+            }
+            else Console.WriteLine("You don't have quite enough coin for this purchase.");
+            Console.WriteLine();
+        }
+        else if (response == ConsoleKey.D4 || response == ConsoleKey.NumPad4)
+        {
+            if (primaryCharacter.currency["GP"] >= fighterArmor[3].Value)
+            {
+                chosenArmor = true;
+                primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(fighterArmor[3].Key).ToArray();
+                primaryCharacter.currency["GP"] -= fighterArmor[3].Value;
+                Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                Console.WriteLine();
+                if (primaryCharacter.currency["GP"] >= 15)
+                {
+                    Console.WriteLine("Would you like to purchase a shield for 15 GP?");
+                    Console.WriteLine();
+                    Console.WriteLine("Press 'Y' if yes or 'N' if not.");
+                    Console.WriteLine();
+                    var purchaseShieldResponse = Console.ReadKey(true).Key;
+                    if (purchaseShieldResponse == ConsoleKey.Y)
+                    {
+                        primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
+                        primaryCharacter.currency["GP"] -= 15;
+                        Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                        Console.WriteLine();
+                    }
+                    else if (purchaseShieldResponse == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                }
+            }
+            else Console.WriteLine("You don't have quite enough coin for this purchase.");
+            Console.WriteLine();
+        }
+        else Console.WriteLine("Please enter a valid choice.");
+    }
+}
+if (primaryCharacter.CharacterClass == "Magic-User")
+{
+    primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(magicUserArmor[0].Key).ToArray();
+    Console.WriteLine("Unfortunately, you must remain unarmored throughout your travels.");
+}
+
+if (primaryCharacter.CharacterClass != "Magic-User")
+{
+    Console.WriteLine("You have the following armor equipped:");
+    foreach (var item in primaryCharacter.EquippedArmor)
+    {
+        Console.WriteLine(item);
+    }
+    Console.WriteLine();
 }
 

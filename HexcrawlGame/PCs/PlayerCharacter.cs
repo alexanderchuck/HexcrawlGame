@@ -12,8 +12,9 @@ namespace HexcrawlGame.PCs
         // Level ✔️
         // Alignment ✔️
         // HP ✔️
-        // Armor
-        // Shield
+        // Starting Gold ✔️
+        // Armor ✔️
+        // Shield ✔️
         // AC
         // Experience ✔️
         // Weapon
