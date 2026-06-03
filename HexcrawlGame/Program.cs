@@ -545,4 +545,3 @@ if (primaryCharacter.CharacterClass != "Magic-User")
     }
     Console.WriteLine();
 }
-
