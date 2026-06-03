@@ -1,5 +1,6 @@
 ﻿using HexcrawlGame.PCs;
 using HexcrawlGame.Environment;
+using System.Linq;
 
 Console.WriteLine("<----------xxx ~*~ xxx---------->");
 Console.WriteLine();
@@ -130,7 +131,7 @@ while (chosenClass == null)
         Console.WriteLine();
     }
 
-    Console.WriteLine("Are you sure this the class you want?");
+    Console.WriteLine("Are you sure this is the class you want?");
     Console.WriteLine();
 
     // Loop to confirm chosen class. Exits loop once player confirms or denies their class choice.
@@ -545,3 +546,46 @@ if (primaryCharacter.CharacterClass != "Magic-User")
     }
     Console.WriteLine();
 }
+
+Console.WriteLine("Combat in Aldon will be unavoidable, so it's for the best that we go over a few core concepts. " +
+    "First up is Armor Class (AC). This value affects the probability of a combatant dealing damage to you." +
+    "There is another facet to dealing damage that we'll touch on later, but for now remember that a lower AC" +
+    "represents a lower chance to be hit in combat, with AC 2 being the lowest possible value.");
+Console.WriteLine();
+
+Console.WriteLine("An unarmored character has an AC of 9.");
+Console.WriteLine("A character wearing leather has an AC of 7");
+Console.WriteLine("A character wearing chainmail has an AC of 5.");
+Console.WriteLine("A character wearing plate has an AC of 3.");
+Console.WriteLine("And any character with a shield equipped reduces their AC by 1 additional point.");
+Console.WriteLine();
+
+// Assigns primary character an armor class scored based on equipped armor.
+if (primaryCharacter.EquippedArmor.Contains("Unarmored"))
+{
+    primaryCharacter.ArmorClass = 9;
+}
+else if (primaryCharacter.EquippedArmor.Contains("Leather"))
+{
+    primaryCharacter.ArmorClass = 7;
+}
+else if (primaryCharacter.EquippedArmor.Contains("Chainmail"))
+{
+    primaryCharacter.ArmorClass = 5;
+}
+else if (primaryCharacter.EquippedArmor.Contains("Plate"))
+{
+    primaryCharacter.ArmorClass = 3;
+}
+
+if (primaryCharacter.EquippedArmor.Contains("Shield"))
+{
+    primaryCharacter.ArmorClass -= 1;
+}
+
+Console.WriteLine("That would put your AC right... around... " + primaryCharacter.ArmorClass + ".");
+Console.WriteLine();
+
+//Player receives random weapon from equippable options based on chosen class.
+
+Console.ReadKey();

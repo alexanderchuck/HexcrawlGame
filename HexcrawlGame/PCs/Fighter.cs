@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HexcrawlGame.PCs
 {
-    internal class Fighter
+    public class Fighter
     {
         // HD Progression
         // Experience Needed to Level Up

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HexcrawlGame.PCs
 {
-    internal class MagicUser
+    public class MagicUser
     {
         // HD Progression
         // Experience Needed to Level Up

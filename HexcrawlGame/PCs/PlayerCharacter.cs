@@ -15,7 +15,7 @@ namespace HexcrawlGame.PCs
         // Starting Gold ✔️
         // Armor ✔️
         // Shield ✔️
-        // AC
+        // AC ✔️
         // Experience ✔️
         // Weapon
         // Savings Throws
