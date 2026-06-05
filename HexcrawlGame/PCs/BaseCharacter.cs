@@ -29,7 +29,6 @@ namespace HexcrawlGame.PCs
         public string[] EquippedWeapon { get; set; } = Array.Empty<string>();
         public string[] EquippedArmor { get; set; } = Array.Empty<string>();
         public int ArmorClass { get; set; }
-        public bool ShieldEquipped { get; set; }
         public int Experience { get; set; } = 0;
         public Dictionary<string, int?> inventory { get; set; } = new Dictionary<string, int?>();
 
