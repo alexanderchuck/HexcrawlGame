@@ -17,8 +17,8 @@ namespace HexcrawlGame.PCs
         // Shield ✔️
         // AC ✔️
         // Experience ✔️
-        // Weapon
-        // Savings Throws
+        // Weapon ✔️
+        // Savings Throws ✔️
         // Attack Matrix
         // Inventory
         // Spells?

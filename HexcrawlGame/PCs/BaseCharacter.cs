@@ -30,6 +30,14 @@ namespace HexcrawlGame.PCs
         public string[] EquippedArmor { get; set; } = Array.Empty<string>();
         public int ArmorClass { get; set; }
         public int Experience { get; set; } = 0;
+        public Dictionary<string, int?> savingThrows { get; set; } = new Dictionary<string, int?>()
+        {
+            { "Poison", null },
+            { "Wands/Rays", null },
+            { "Paralysis/Petrification", null },
+            { "Breath", null },
+            { "Spells", null }
+        };
         public Dictionary<string, int?> inventory { get; set; } = new Dictionary<string, int?>();
 
         // Moved into the class to avoid CS0116. Marked static/readonly so it's shared and immutable.

@@ -599,28 +599,92 @@ namespace HexcrawlGame.Scripts
             if (primaryCharacter.CharacterClass == "Magic-User")
             {
                 var magicUserWeapons = weaponsList.Where(w => w.Key.Contains("Dagger") || w.Key.Contains("Staff")).ToList();
-                var randomWeapon = magicUserWeapons[new Random().Next(0, weaponsList.Count - 1)];
-                primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+                var randomWeapon = magicUserWeapons[new Random().Next(0, magicUserWeapons.Count - 1)];
+                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
             }
 
             if (primaryCharacter.CharacterClass == "Cleric")
             {
                 var clericWeapons = weaponsList.Where(w => w.Value.HasEdge == false && w.Value.IsRanged == false).ToList();
-                var randomWeapon = clericWeapons[new Random().Next(0, weaponsList.Count - 1)];
-                primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+                var randomWeapon = clericWeapons[new Random().Next(0, clericWeapons.Count - 1)];
+                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+
+                // ADD IN A 25% CHANCE TO RECEIVE A RANGED WEAPON IN ADDITION
+                var rangedWeaponChance = new Random().Next(1, 101);
+                if (rangedWeaponChance <= 25)
+                {
+                    var rangedWeapons = weaponsList.Where(w => w.Value.IsRanged == true && w.Value.HasEdge == false && w.Key != "War Hammer").ToList();
+                    var randomRangedWeapon = rangedWeapons[new Random().Next(0, rangedWeapons.Count - 1)];
+                    primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomRangedWeapon.Key).ToArray();
+                }
             }
 
             if (primaryCharacter.CharacterClass == "Fighter")
             {
-                var fighterWeapons = weaponsList.Where(w => w.Key.Contains("Staff") && w.Value.IsRanged == false).ToList();
-                var randomWeapon = fighterWeapons[new Random().Next(0, weaponsList.Count - 1)];
-                primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+                var fighterWeapons = weaponsList.Where(w => !w.Key.Contains("Staff") && w.Value.IsRanged == false).ToList();
+                var randomWeapon = fighterWeapons[new Random().Next(0, fighterWeapons.Count - 1)];
+                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+
+                // ADD IN A 25% CHANCE TO RECEIVE A RANGED WEAPON IN ADDITION
+                var rangedWeaponChance = new Random().Next(1, 101);
+                if (rangedWeaponChance <= 25)
+                {
+                    var rangedWeapons = weaponsList.Where(w => w.Value.IsRanged == true && w.Key != "Spear" && w.Key != "Dagger").ToList();
+                    var randomRangedWeapon = rangedWeapons[new Random().Next(0, rangedWeapons.Count - 1)];
+                    primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomRangedWeapon.Key).ToArray();
+                }
             }
 
-            // ADD IN A 25% CHANCE TO RECEIVE A RANGED WEAPON IN ADDITION
+            Console.WriteLine("You have a the following weapons equipped:");
+            foreach (var item in primaryCharacter.EquippedWeapon)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine();
 
-            Console.WriteLine("You have a " + primaryCharacter.EquippedWeapon + " equipped.");
-            
+            Console.WriteLine("Next step is to go over your Saving Throw values. These are representative of your character's " +
+                "ability to withstand certain spells and environmental effects. In certain situations a 20-sided die is " +
+                "rolled and if it equals or exceeds the value of your relative Saving Throw, the effects will be resisted.");
+            Console.WriteLine();
+
+            // Loop to assign Saving Throw values to player character based on class and level. Uses the SavingThrows dictionary in each class to determine values.
+            var fighterSavingThrows = Fighter.SavingThrows.ToList();
+            var clericSavingThrows = Cleric.SavingThrows.ToList();
+            var magicUserSavingThrows = MagicUser.SavingThrows.ToList();
+            if (primaryCharacter.CharacterClass == "Fighter")
+            {
+                primaryCharacter.savingThrows["Poison"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[0];
+                primaryCharacter.savingThrows["Wands/Rays"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[1];
+                primaryCharacter.savingThrows["Paralysis/Petrification"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[2];
+                primaryCharacter.savingThrows["Breath"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[3];
+                primaryCharacter.savingThrows["Spells"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[4];
+            }
+            else if (primaryCharacter.CharacterClass == "Cleric")
+            {
+                primaryCharacter.savingThrows["Poison"] = clericSavingThrows[primaryCharacter.Level - 1].Value[0];
+                primaryCharacter.savingThrows["Wands/Rays"] = clericSavingThrows[primaryCharacter.Level - 1].Value[1];
+                primaryCharacter.savingThrows["Paralysis/Petrification"] = clericSavingThrows[primaryCharacter.Level - 1].Value[2];
+                primaryCharacter.savingThrows["Breath"] = clericSavingThrows[primaryCharacter.Level - 1].Value[3];
+                primaryCharacter.savingThrows["Spells"] = clericSavingThrows[primaryCharacter.Level - 1].Value[4];
+            }
+            else if (primaryCharacter.CharacterClass == "Magic-User")
+            {
+                primaryCharacter.savingThrows["Poison"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[0];
+                primaryCharacter.savingThrows["Wands/Rays"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[1];
+                primaryCharacter.savingThrows["Paralysis/Petrification"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[2];
+                primaryCharacter.savingThrows["Breath"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[3];
+                primaryCharacter.savingThrows["Spells"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[4];
+            }
+
+            Console.WriteLine("Your Saving Throw values are as follows:");
+            foreach (var savingThrow in primaryCharacter.savingThrows)
+            {
+                Console.WriteLine(savingThrow.Key + ": " + savingThrow.Value);
+            }
+            Console.WriteLine();
+
+            //Console.WriteLine("")
+
             Console.ReadKey();
         }
     }
