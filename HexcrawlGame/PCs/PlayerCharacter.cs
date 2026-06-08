@@ -19,7 +19,13 @@ namespace HexcrawlGame.PCs
         // Experience ✔️
         // Weapon ✔️
         // Savings Throws ✔️
-        // Attack Matrix
+
+        // Attack Matrix ✔️
+        // -> z = y + (9 - x)
+        // -> "z" is minimum roll result to hit
+        // -> "y" is level-determined number to hit AC 9
+        // -> "x" is target's AC value
+
         // Inventory
         // Spells?
     }

@@ -26,6 +26,23 @@ namespace HexcrawlGame.PCs
             { 12, new Random().Next(8, 49) },
         };
 
+        // Key is Cleric level and paired value is number to hit AC 9
+        public static readonly Dictionary<int, int> AttackMatrix = new()
+        {
+            { 1, 10 },
+            { 2, 9 },
+            { 3, 9 },
+            { 4, 8 },
+            { 5, 7 },
+            { 6, 7 },
+            { 7, 6 },
+            { 8, 6 },
+            { 9, 5 },
+            { 10, 5 },
+            { 11, 5 },
+            { 12, 5 },
+        };
+
         public static readonly Dictionary<int, int[]> SavingThrows = new()
         {
             { 1, [11, 12, 14, 16, 15] },

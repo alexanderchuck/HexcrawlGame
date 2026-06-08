@@ -19,7 +19,6 @@ using System.Linq;
 // Dungeon Generation
 // Dungeon Population
 
-
 Console.WriteLine("<----------xxx ~*~ xxx---------->");
 Console.WriteLine();
 Console.WriteLine("Welcome to Hexcrawl Survival!");
