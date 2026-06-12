@@ -41,9 +41,7 @@ namespace HexcrawlGame.PCs
         // -> "y" is level-determined number to hit AC 9
         // -> "x" is target's AC value
 
-        // Total Encumbrance
-
-        // Inventory
+        // Inventory ✔️
 
         // Spells?
 

@@ -719,7 +719,24 @@ namespace HexcrawlGame.Scripts
                 if (item.Value > 0) Console.WriteLine(item.Key + ": " + item.Value);
                 else Console.WriteLine(item.Key);
             }
-            
+            Console.WriteLine();
+
+            Console.WriteLine("I'll throw a couple extra items in for free. Just to get you started. They are as follows:");
+
+            // Randomly generates 5 additional items from the Supplies list and adds them to the player's inventory.
+            int supplyNum = 1;
+            Random random = new Random();
+            while (supplyNum <= 5)
+            {
+                var randomSupplyNum = random.Next(0, Supplies.supplies.Count + 1);
+                var randomSupplyItem = Supplies.supplies[randomSupplyNum];
+                if (primaryCharacter.Inventory.TryAdd(randomSupplyItem.Name, randomSupplyItem.Quantity))
+                {
+                    if (randomSupplyItem.Quantity > 0) Console.WriteLine(randomSupplyItem.Name + ": " + randomSupplyItem.Quantity);
+                    else Console.WriteLine(randomSupplyItem.Name);
+                    supplyNum++;
+                }
+            }
             Console.WriteLine();
 
             Console.ReadKey();
