@@ -10,6 +10,7 @@ namespace HexcrawlGame.PCs
         // Experience Needed to Level Up
         // Attack Matrix
         // Saving Throws
+
         public static readonly Dictionary<int, int> HDProgression = new()
         {
             { 1, new Random().Next(1, 7)},

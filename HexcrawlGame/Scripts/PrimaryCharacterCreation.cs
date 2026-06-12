@@ -72,11 +72,11 @@ namespace HexcrawlGame.Scripts
 
             // Loop to assign random attribute scores to each attribute in the attributes dictionary.
             // Scores are generated using Random.Next() with a range of 3-19 (exclusive upper bound).
-            var attributeList = primaryCharacter.attributes.Keys.ToList();
+            var attributeList = primaryCharacter.Attributes.Keys.ToList();
             Random attributeScore = new Random();
             foreach (var attribute in attributeList)
             {
-                Console.WriteLine(attribute + ": " + (primaryCharacter.attributes[attribute] = attributeScore.Next(3, 19)));
+                Console.WriteLine(attribute + ": " + (primaryCharacter.Attributes[attribute] = attributeScore.Next(3, 19)));
             }
             Console.WriteLine();
 
@@ -159,6 +159,22 @@ namespace HexcrawlGame.Scripts
                     }
 
                 }
+            }
+
+            // Sends the prime requisite value through the GetExperienceBonus function to determine the bonus
+            if (primaryCharacter.CharacterClass == "Cleric")
+            {
+                primaryCharacter.BonusExperience = primaryCharacter.GetExperienceBonus(primaryCharacter.Attributes["Wisdom"].Value);
+            }
+
+            if (primaryCharacter.CharacterClass == "Fighter")
+            {
+                primaryCharacter.BonusExperience = primaryCharacter.GetExperienceBonus(primaryCharacter.Attributes["Strength"].Value);
+            }
+
+            if (primaryCharacter.CharacterClass == "Magic-User")
+            {
+                primaryCharacter.BonusExperience = primaryCharacter.GetExperienceBonus(primaryCharacter.Attributes["Intelligence"].Value);
             }
 
             Console.WriteLine("Alright then. The world can always use another Level " + primaryCharacter.Level + " " + primaryCharacter.CharacterClass + "!");
@@ -286,7 +302,7 @@ namespace HexcrawlGame.Scripts
             Console.WriteLine("Now it's time to count the money in your coin purse.");
             Console.WriteLine();
             var currentGold = new Random().Next(30, 181);
-            primaryCharacter.currency["GP"] = currentGold;
+            primaryCharacter.Currency["GP"] = currentGold;
             Console.WriteLine("You upturn the leather pouch and find " + currentGold + " gold pieces.");
             Console.WriteLine("That coin isn't going to spend itself. Let's buy some gear!");
             Console.WriteLine();
@@ -321,14 +337,14 @@ namespace HexcrawlGame.Scripts
                     }
                     else if (response == ConsoleKey.D2 || response == ConsoleKey.NumPad2)
                     {
-                        if (primaryCharacter.currency["GP"] >= clericArmor[1].Value)
+                        if (primaryCharacter.Currency["GP"] >= clericArmor[1].Value)
                         {
                             chosenArmor = true;
                             primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(clericArmor[1].Key).ToArray();
-                            primaryCharacter.currency["GP"] -= clericArmor[1].Value;
-                            Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                            primaryCharacter.Currency["GP"] -= clericArmor[1].Value;
+                            Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                             Console.WriteLine();
-                            if (primaryCharacter.currency["GP"] >= 15)
+                            if (primaryCharacter.Currency["GP"] >= 15)
                             {
                                 Console.WriteLine("Would you like to purchase a shield for 15 GP?");
                                 Console.WriteLine();
@@ -338,8 +354,8 @@ namespace HexcrawlGame.Scripts
                                 if (purchaseShieldResponse == ConsoleKey.Y)
                                 {
                                     primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
-                                    primaryCharacter.currency["GP"] -= 15;
-                                    Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                                    primaryCharacter.Currency["GP"] -= 15;
+                                    Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                                     Console.WriteLine();
                                 }
                                 else if (purchaseShieldResponse == ConsoleKey.N)
@@ -353,14 +369,14 @@ namespace HexcrawlGame.Scripts
                     }
                     else if (response == ConsoleKey.D3 || response == ConsoleKey.NumPad3)
                     {
-                        if (primaryCharacter.currency["GP"] >= clericArmor[2].Value)
+                        if (primaryCharacter.Currency["GP"] >= clericArmor[2].Value)
                         {
                             chosenArmor = true;
                             primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(clericArmor[2].Key).ToArray();
-                            primaryCharacter.currency["GP"] -= clericArmor[2].Value;
-                            Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                            primaryCharacter.Currency["GP"] -= clericArmor[2].Value;
+                            Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                             Console.WriteLine();
-                            if (primaryCharacter.currency["GP"] >= 15)
+                            if (primaryCharacter.Currency["GP"] >= 15)
                             {
                                 Console.WriteLine("Would you like to purchase a shield for 15 GP?");
                                 Console.WriteLine();
@@ -370,8 +386,8 @@ namespace HexcrawlGame.Scripts
                                 if (purchaseShieldResponse == ConsoleKey.Y)
                                 {
                                     primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
-                                    primaryCharacter.currency["GP"] -= 15;
-                                    Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                                    primaryCharacter.Currency["GP"] -= 15;
+                                    Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                                     Console.WriteLine();
                                 }
                                 else if (purchaseShieldResponse == ConsoleKey.N)
@@ -385,14 +401,14 @@ namespace HexcrawlGame.Scripts
                     }
                     else if (response == ConsoleKey.D4 || response == ConsoleKey.NumPad3)
                     {
-                        if (primaryCharacter.currency["GP"] >= clericArmor[3].Value)
+                        if (primaryCharacter.Currency["GP"] >= clericArmor[3].Value)
                         {
                             chosenArmor = true;
                             primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(clericArmor[3].Key).ToArray();
-                            primaryCharacter.currency["GP"] -= clericArmor[3].Value;
-                            Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                            primaryCharacter.Currency["GP"] -= clericArmor[3].Value;
+                            Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                             Console.WriteLine();
-                            if (primaryCharacter.currency["GP"] >= 15)
+                            if (primaryCharacter.Currency["GP"] >= 15)
                             {
                                 Console.WriteLine("Would you like to purchase a shield for 15 GP?");
                                 Console.WriteLine();
@@ -402,8 +418,8 @@ namespace HexcrawlGame.Scripts
                                 if (purchaseShieldResponse == ConsoleKey.Y)
                                 {
                                     primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
-                                    primaryCharacter.currency["GP"] -= 15;
-                                    Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                                    primaryCharacter.Currency["GP"] -= 15;
+                                    Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                                     Console.WriteLine();
                                 }
                                 else if (purchaseShieldResponse == ConsoleKey.N)
@@ -435,14 +451,14 @@ namespace HexcrawlGame.Scripts
                     }
                     else if (response == ConsoleKey.D2 || response == ConsoleKey.NumPad2)
                     {
-                        if (primaryCharacter.currency["GP"] >= fighterArmor[1].Value)
+                        if (primaryCharacter.Currency["GP"] >= fighterArmor[1].Value)
                         {
                             chosenArmor = true;
                             primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(fighterArmor[1].Key).ToArray();
-                            primaryCharacter.currency["GP"] -= fighterArmor[1].Value;
-                            Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                            primaryCharacter.Currency["GP"] -= fighterArmor[1].Value;
+                            Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                             Console.WriteLine();
-                            if (primaryCharacter.currency["GP"] >= 15)
+                            if (primaryCharacter.Currency["GP"] >= 15)
                             {
                                 Console.WriteLine("Would you like to purchase a shield for 15 GP?");
                                 Console.WriteLine();
@@ -452,8 +468,8 @@ namespace HexcrawlGame.Scripts
                                 if (purchaseShieldResponse == ConsoleKey.Y)
                                 {
                                     primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
-                                    primaryCharacter.currency["GP"] -= 15;
-                                    Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                                    primaryCharacter.Currency["GP"] -= 15;
+                                    Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                                     Console.WriteLine();
                                 }
                                 else if (purchaseShieldResponse == ConsoleKey.N)
@@ -467,14 +483,14 @@ namespace HexcrawlGame.Scripts
                     }
                     else if (response == ConsoleKey.D3 || response == ConsoleKey.NumPad3)
                     {
-                        if (primaryCharacter.currency["GP"] >= fighterArmor[2].Value)
+                        if (primaryCharacter.Currency["GP"] >= fighterArmor[2].Value)
                         {
                             chosenArmor = true;
                             primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(fighterArmor[2].Key).ToArray();
-                            primaryCharacter.currency["GP"] -= fighterArmor[2].Value;
-                            Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                            primaryCharacter.Currency["GP"] -= fighterArmor[2].Value;
+                            Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                             Console.WriteLine();
-                            if (primaryCharacter.currency["GP"] >= 15)
+                            if (primaryCharacter.Currency["GP"] >= 15)
                             {
                                 Console.WriteLine("Would you like to purchase a shield for 15 GP?");
                                 Console.WriteLine();
@@ -484,8 +500,8 @@ namespace HexcrawlGame.Scripts
                                 if (purchaseShieldResponse == ConsoleKey.Y)
                                 {
                                     primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
-                                    primaryCharacter.currency["GP"] -= 15;
-                                    Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                                    primaryCharacter.Currency["GP"] -= 15;
+                                    Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                                     Console.WriteLine();
                                 }
                                 else if (purchaseShieldResponse == ConsoleKey.N)
@@ -499,14 +515,14 @@ namespace HexcrawlGame.Scripts
                     }
                     else if (response == ConsoleKey.D4 || response == ConsoleKey.NumPad4)
                     {
-                        if (primaryCharacter.currency["GP"] >= fighterArmor[3].Value)
+                        if (primaryCharacter.Currency["GP"] >= fighterArmor[3].Value)
                         {
                             chosenArmor = true;
                             primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>(fighterArmor[3].Key).ToArray();
-                            primaryCharacter.currency["GP"] -= fighterArmor[3].Value;
-                            Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                            primaryCharacter.Currency["GP"] -= fighterArmor[3].Value;
+                            Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                             Console.WriteLine();
-                            if (primaryCharacter.currency["GP"] >= 15)
+                            if (primaryCharacter.Currency["GP"] >= 15)
                             {
                                 Console.WriteLine("Would you like to purchase a shield for 15 GP?");
                                 Console.WriteLine();
@@ -516,8 +532,8 @@ namespace HexcrawlGame.Scripts
                                 if (purchaseShieldResponse == ConsoleKey.Y)
                                 {
                                     primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
-                                    primaryCharacter.currency["GP"] -= 15;
-                                    Console.WriteLine("You have " + primaryCharacter.currency["GP"] + " GP left.");
+                                    primaryCharacter.Currency["GP"] -= 15;
+                                    Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                                     Console.WriteLine();
                                 }
                                 else if (purchaseShieldResponse == ConsoleKey.N)
@@ -653,37 +669,58 @@ namespace HexcrawlGame.Scripts
             var magicUserSavingThrows = MagicUser.SavingThrows.ToList();
             if (primaryCharacter.CharacterClass == "Fighter")
             {
-                primaryCharacter.savingThrows["Poison"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[0];
-                primaryCharacter.savingThrows["Wands/Rays"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[1];
-                primaryCharacter.savingThrows["Paralysis/Petrification"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[2];
-                primaryCharacter.savingThrows["Breath"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[3];
-                primaryCharacter.savingThrows["Spells"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[4];
+                primaryCharacter.SavingThrows["Poison"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[0];
+                primaryCharacter.SavingThrows["Wands/Rays"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[1];
+                primaryCharacter.SavingThrows["Paralysis/Petrification"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[2];
+                primaryCharacter.SavingThrows["Breath"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[3];
+                primaryCharacter.SavingThrows["Spells"] = fighterSavingThrows[primaryCharacter.Level - 1].Value[4];
             }
             else if (primaryCharacter.CharacterClass == "Cleric")
             {
-                primaryCharacter.savingThrows["Poison"] = clericSavingThrows[primaryCharacter.Level - 1].Value[0];
-                primaryCharacter.savingThrows["Wands/Rays"] = clericSavingThrows[primaryCharacter.Level - 1].Value[1];
-                primaryCharacter.savingThrows["Paralysis/Petrification"] = clericSavingThrows[primaryCharacter.Level - 1].Value[2];
-                primaryCharacter.savingThrows["Breath"] = clericSavingThrows[primaryCharacter.Level - 1].Value[3];
-                primaryCharacter.savingThrows["Spells"] = clericSavingThrows[primaryCharacter.Level - 1].Value[4];
+                primaryCharacter.SavingThrows["Poison"] = clericSavingThrows[primaryCharacter.Level - 1].Value[0];
+                primaryCharacter.SavingThrows["Wands/Rays"] = clericSavingThrows[primaryCharacter.Level - 1].Value[1];
+                primaryCharacter.SavingThrows["Paralysis/Petrification"] = clericSavingThrows[primaryCharacter.Level - 1].Value[2];
+                primaryCharacter.SavingThrows["Breath"] = clericSavingThrows[primaryCharacter.Level - 1].Value[3];
+                primaryCharacter.SavingThrows["Spells"] = clericSavingThrows[primaryCharacter.Level - 1].Value[4];
             }
             else if (primaryCharacter.CharacterClass == "Magic-User")
             {
-                primaryCharacter.savingThrows["Poison"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[0];
-                primaryCharacter.savingThrows["Wands/Rays"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[1];
-                primaryCharacter.savingThrows["Paralysis/Petrification"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[2];
-                primaryCharacter.savingThrows["Breath"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[3];
-                primaryCharacter.savingThrows["Spells"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[4];
+                primaryCharacter.SavingThrows["Poison"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[0];
+                primaryCharacter.SavingThrows["Wands/Rays"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[1];
+                primaryCharacter.SavingThrows["Paralysis/Petrification"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[2];
+                primaryCharacter.SavingThrows["Breath"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[3];
+                primaryCharacter.SavingThrows["Spells"] = magicUserSavingThrows[primaryCharacter.Level - 1].Value[4];
             }
 
             Console.WriteLine("Your Saving Throw values are as follows:");
-            foreach (var savingThrow in primaryCharacter.savingThrows)
+            foreach (var savingThrow in primaryCharacter.SavingThrows)
             {
                 Console.WriteLine(savingThrow.Key + ": " + savingThrow.Value);
             }
             Console.WriteLine();
 
-            //Console.WriteLine("")
+            Console.WriteLine("As the end of our conversation draws near, it is ill-advised for any adventurer to leave town " +
+                "without the necessary supplies. At the very least, you'll need the following:");
+            Console.WriteLine();
+
+            // Iterating over a starting items list and adding each item to the player's inventory.
+            foreach (var item in Supplies.starterSupplies)
+            { 
+                primaryCharacter.Inventory.Add(item.Name, item.Quantity);
+            }
+
+            if (primaryCharacter.CharacterClass == "Cleric")
+            {
+                primaryCharacter.Inventory.Add(Supplies.supplies[5].Name, null);
+            }
+            
+            foreach (var item in primaryCharacter.Inventory)
+            {
+                if (item.Value > 0) Console.WriteLine(item.Key + ": " + item.Value);
+                else Console.WriteLine(item.Key);
+            }
+            
+            Console.WriteLine();
 
             Console.ReadKey();
         }
