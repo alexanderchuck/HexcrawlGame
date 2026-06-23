@@ -711,7 +711,11 @@ namespace HexcrawlGame.Scripts
 
             if (primaryCharacter.CharacterClass == "Cleric")
             {
-                primaryCharacter.Inventory.Add(Supplies.supplies[5].Name, null);
+                var clericStartingItem = Supplies.supplies.FirstOrDefault(item => item.Name == "Wooden Cross");
+                if (clericStartingItem != null)
+                {
+                primaryCharacter.Inventory.Add(clericStartingItem.Name, null);
+                }
             }
             
             foreach (var item in primaryCharacter.Inventory)
@@ -728,7 +732,8 @@ namespace HexcrawlGame.Scripts
             Random random = new Random();
             while (supplyNum <= 5)
             {
-                var randomSupplyNum = random.Next(0, Supplies.supplies.Count + 1);
+                // Argument out of range exception???
+                var randomSupplyNum = random.Next(0, Supplies.supplies.Count);
                 var randomSupplyItem = Supplies.supplies[randomSupplyNum];
                 if (primaryCharacter.Inventory.TryAdd(randomSupplyItem.Name, randomSupplyItem.Quantity))
                 {

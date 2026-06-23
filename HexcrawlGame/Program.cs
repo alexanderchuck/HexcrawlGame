@@ -6,17 +6,32 @@ using System.Linq;
 
 // MECHANIC CHECKLIST:
 // Character Creation ✔️
-// Item Dictionary
-// Spell Dictionary
+
+// Item Dictionary/List ✔️
+
+// Spell Dictionary/List ✔️
+
+// Party Formation
+// -> Array of PCs
+
 // Combat (Melee/Ranged)
+
 // Combat (Spellcasting)
+
 // Resource Management
+
 // Hirelings
+
 // Movement
+
 // Environmental Effects
+
 // Hex Generation
+
 // Hex Population
+
 // Dungeon Generation
+
 // Dungeon Population
 
 Console.WriteLine("<----------xxx ~*~ xxx---------->");
