@@ -732,7 +732,6 @@ namespace HexcrawlGame.Scripts
             Random random = new Random();
             while (supplyNum <= 5)
             {
-                // Argument out of range exception???
                 var randomSupplyNum = random.Next(0, Supplies.supplies.Count);
                 var randomSupplyItem = Supplies.supplies[randomSupplyNum];
                 if (primaryCharacter.Inventory.TryAdd(randomSupplyItem.Name, randomSupplyItem.Quantity))
