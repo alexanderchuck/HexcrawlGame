@@ -1,8 +1,5 @@
 ﻿using HexcrawlGame.Items;
 using HexcrawlGame.PCs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HexcrawlGame.Scripts
 {
@@ -610,44 +607,44 @@ namespace HexcrawlGame.Scripts
                 "and Magic-Users are limited to daggers and staves.");
             Console.WriteLine();
 
-            var weaponsList = WeaponStats.weapons.ToList();
+            var weaponsList = WeaponStats.weaponList;
 
             if (primaryCharacter.CharacterClass == "Magic-User")
             {
-                var magicUserWeapons = weaponsList.Where(w => w.Key.Contains("Dagger") || w.Key.Contains("Staff")).ToList();
+                var magicUserWeapons = weaponsList.Where(w => w.Name.Contains("Dagger") || w.Name.Contains("Staff")).ToList();
                 var randomWeapon = magicUserWeapons[new Random().Next(0, magicUserWeapons.Count - 1)];
-                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Name).ToArray();
             }
 
             if (primaryCharacter.CharacterClass == "Cleric")
             {
-                var clericWeapons = weaponsList.Where(w => w.Value.HasEdge == false && w.Value.IsRanged == false).ToList();
+                var clericWeapons = weaponsList.Where(w => w.HasEdge == false && w.IsRanged == false).ToList();
                 var randomWeapon = clericWeapons[new Random().Next(0, clericWeapons.Count - 1)];
-                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Name).ToArray();
 
                 // ADD IN A 25% CHANCE TO RECEIVE A RANGED WEAPON IN ADDITION
                 var rangedWeaponChance = new Random().Next(1, 101);
                 if (rangedWeaponChance <= 25)
                 {
-                    var rangedWeapons = weaponsList.Where(w => w.Value.IsRanged == true && w.Value.HasEdge == false && w.Key != "War Hammer").ToList();
+                    var rangedWeapons = weaponsList.Where(w => w.IsRanged == true && w.HasEdge == false && w.Name != "War Hammer").ToList();
                     var randomRangedWeapon = rangedWeapons[new Random().Next(0, rangedWeapons.Count - 1)];
-                    primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomRangedWeapon.Key).ToArray();
+                    primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomRangedWeapon.Name).ToArray();
                 }
             }
 
             if (primaryCharacter.CharacterClass == "Fighter")
             {
-                var fighterWeapons = weaponsList.Where(w => !w.Key.Contains("Staff") && w.Value.IsRanged == false).ToList();
+                var fighterWeapons = weaponsList.Where(w => !w.Name.Contains("Staff") && w.IsRanged == false).ToList();
                 var randomWeapon = fighterWeapons[new Random().Next(0, fighterWeapons.Count - 1)];
-                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Key).ToArray();
+                primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomWeapon.Name).ToArray();
 
                 // ADD IN A 25% CHANCE TO RECEIVE A RANGED WEAPON IN ADDITION
                 var rangedWeaponChance = new Random().Next(1, 101);
                 if (rangedWeaponChance <= 25)
                 {
-                    var rangedWeapons = weaponsList.Where(w => w.Value.IsRanged == true && w.Key != "Spear" && w.Key != "Dagger").ToList();
+                    var rangedWeapons = weaponsList.Where(w => w.IsRanged == true && w.Name != "Spear" && w.Name != "Dagger").ToList();
                     var randomRangedWeapon = rangedWeapons[new Random().Next(0, rangedWeapons.Count - 1)];
-                    primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomRangedWeapon.Key).ToArray();
+                    primaryCharacter.EquippedWeapon = primaryCharacter.EquippedWeapon.Append<string>(randomRangedWeapon.Name).ToArray();
                 }
             }
 
@@ -699,13 +696,13 @@ namespace HexcrawlGame.Scripts
             }
             Console.WriteLine();
 
-            Console.WriteLine("As the end of our conversation draws near, it is ill-advised for any adventurer to leave town " +
+            Console.WriteLine("As the end of our conversation draws near, I must remind you that it is ill-advised for any adventurer to leave town " +
                 "without the necessary supplies. At the very least, you'll need the following:");
             Console.WriteLine();
 
             // Iterating over a starting items list and adding each item to the player's inventory.
             foreach (var item in Supplies.starterSupplies)
-            { 
+            {
                 primaryCharacter.Inventory.Add(item.Name, item.Quantity);
             }
 
@@ -714,10 +711,10 @@ namespace HexcrawlGame.Scripts
                 var clericStartingItem = Supplies.supplies.FirstOrDefault(item => item.Name == "Wooden Cross");
                 if (clericStartingItem != null)
                 {
-                primaryCharacter.Inventory.Add(clericStartingItem.Name, null);
+                    primaryCharacter.Inventory.Add(clericStartingItem.Name, null);
                 }
             }
-            
+
             foreach (var item in primaryCharacter.Inventory)
             {
                 if (item.Value > 0) Console.WriteLine(item.Key + ": " + item.Value);
@@ -742,6 +739,38 @@ namespace HexcrawlGame.Scripts
                 }
             }
             Console.WriteLine();
+
+            if (primaryCharacter.CharacterClass == "Cleric")
+            {
+                Console.WriteLine("As a Cleric, you have the ability to cast spells. Here is a list of spells at your disposal:");
+                Console.WriteLine();
+                foreach (var spell in Spells.ClericSpells.firstLevelClericSpells )
+                {
+                    Console.WriteLine(spell.Name);
+                }
+                Console.WriteLine();
+                Console.WriteLine("You must prepare spells at the beginning of each day in order to access them when needed. " +
+                    "At level 1 you are limited to one prepared spell per day. This limit will increase with each level.");
+                Console.WriteLine();
+            }
+
+            if (primaryCharacter.CharacterClass == "Magic-User")
+            {
+                Console.WriteLine("As a Magic-User, you have the ability to cast spells. Here is a list of spells at your disposal:");
+                Console.WriteLine();
+                foreach (var spell in Spells.MagicUserSpells.firstLevelMagicUserSpells)
+                {
+                    Console.WriteLine(spell.Name);
+                }
+                Console.WriteLine();
+                Console.WriteLine("You must prepare spells at the beginning of each day in order to access them when needed. " +
+                    "At level 1 you are limited to one prepared spell per day. This limit will increase with each level.");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("Now that we have a better idea of who you are and what role you might play in the world, " +
+                "it is time to set off on your adventure. I bid you farewell, " + primaryCharacter.Name + ". May your coming " +
+                "days be fortuitous and noteworthy!");
 
             Console.ReadKey();
         }

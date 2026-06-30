@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HexcrawlGame.Environment
+﻿namespace HexcrawlGame.Environment
 {
     public class Biomes
     {

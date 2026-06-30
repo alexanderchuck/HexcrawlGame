@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HexcrawlGame.Items
+﻿namespace HexcrawlGame.Items
 {
     public class Supplies
     {

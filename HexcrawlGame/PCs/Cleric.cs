@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HexcrawlGame.PCs
+﻿namespace HexcrawlGame.PCs
 {
     public class Cleric
     {
@@ -10,7 +6,7 @@ namespace HexcrawlGame.PCs
         // Experience Needed to Level Up
         // Attack Matrix
         // Saving Throws
-        
+
         public static readonly Dictionary<int, int> HDProgression = new()
         {
             { 1, new Random().Next(1, 7) },
@@ -60,7 +56,7 @@ namespace HexcrawlGame.PCs
             { 12, [5, 6, 8, 10, 9] },
         };
 
-        public static readonly int[] ExpToLevel = 
+        public static readonly int[] ExpToLevel =
         {
             1500, // Level 2
             3000, // Level 3

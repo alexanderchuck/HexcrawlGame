@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HexcrawlGame.PCs
+﻿namespace HexcrawlGame.PCs
 {
     public class BaseCharacter
     {
@@ -55,7 +51,7 @@ namespace HexcrawlGame.PCs
             {"Neutral", "Neutral"},
             {"Chaotic", "Chaotic"}
         };
-        
+
         public double GetExperienceBonus(int bonus) => bonus switch
         {
             >= 3 and <= 5 => -.2,
@@ -64,5 +60,7 @@ namespace HexcrawlGame.PCs
             >= 13 and <= 15 => .05,
             >= 16 and <= 18 => .1,
         };
+
+        public object[]? PreparedSpells { get; set; }
     }
 }

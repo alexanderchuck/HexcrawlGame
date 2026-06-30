@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HexcrawlGame.Spells
+﻿namespace HexcrawlGame.Spells
 {
     public class ClericSpells
     {
         public string Name { get; set; }
         public int SpellLevel { get; set; }
 
-    public static List<ClericSpells> firstLevelClericSpells = new List<ClericSpells>()
+        public static List<ClericSpells> firstLevelClericSpells = new List<ClericSpells>()
     {
         new ClericSpells { Name = "Cure Light Wounds", SpellLevel = 1 },
         new ClericSpells { Name = "Detect Evil", SpellLevel = 1 },

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HexcrawlGame.Enemies
+﻿namespace HexcrawlGame.Enemies
 {
     public class Bestiary
     {
-        public string Name {  get; set; }
+        public string Name { get; set; }
         public int NumberAppearing { get; set; }
         public int ArmorClass { get; set; }
         public int? MovementRate { get; set; }
