@@ -1,6 +1,13 @@
 ﻿using HexcrawlGame.Scripts;
 
 // MECHANIC CHECKLIST:
+
+// Persistent Game Data (SQL Server)
+
+// Main Menu
+
+// Pause Menu
+
 // Character Creation ✔️
 
 // Item List ✔️
@@ -16,13 +23,15 @@
 
 // Spell Preparation Function
 
+// Marching Order
+
+// Hirelings
+
 // Combat (Melee/Ranged)
 
 // Combat (Spellcasting)
 
 // Resource Management
-
-// Hirelings
 
 // Movement
 

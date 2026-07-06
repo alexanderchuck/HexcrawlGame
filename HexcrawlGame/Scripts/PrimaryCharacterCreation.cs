@@ -8,14 +8,15 @@ namespace HexcrawlGame.Scripts
         public void CreateCharacter()
         {
             // Player character construction and setup
-            BaseCharacter primaryCharacter = new BaseCharacter();
+            BaseCharacter primaryCharacter = new();
 
             Console.WriteLine("What is your name?");
             Console.WriteLine();
 
             // Assings a string value to the Name property via user input.
             primaryCharacter.Name = Console.ReadLine();
-            while (string.IsNullOrEmpty(primaryCharacter.Name))
+            Console.WriteLine();
+            while (string.IsNullOrEmpty(primaryCharacter.Name) || primaryCharacter.Name.Any(char.IsDigit))
             {
                 Console.WriteLine("Please enter a valid name.");
                 primaryCharacter.Name = Console.ReadLine();
@@ -744,7 +745,7 @@ namespace HexcrawlGame.Scripts
             {
                 Console.WriteLine("As a Cleric, you have the ability to cast spells. Here is a list of spells at your disposal:");
                 Console.WriteLine();
-                foreach (var spell in Spells.ClericSpells.firstLevelClericSpells )
+                foreach (var spell in Spells.ClericSpells.firstLevelClericSpells)
                 {
                     Console.WriteLine(spell.Name);
                 }

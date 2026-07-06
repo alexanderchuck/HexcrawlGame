@@ -7,7 +7,7 @@
         public int ArmorClass { get; set; }
         public int? MovementRate { get; set; }
         public int[]? HitDice { get; set; }
-        public string[] Alignment { get; set; }
+        public string[]? Alignment { get; set; }
         public string? TreasureType { get; set; }
 
         public List<Bestiary> bestiary { get; set; } = new List<Bestiary>()
