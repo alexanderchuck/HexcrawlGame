@@ -94,7 +94,7 @@ namespace HexcrawlGame.Scripts
             while (chosenClass == null)
             {
                 int num = 1;
-                foreach (var characterClass in BaseCharacter.classes)
+                foreach (var characterClass in classList)
                 {
                     Console.WriteLine(num + ". " + characterClass.Key);
                     num++;
@@ -379,11 +379,11 @@ namespace HexcrawlGame.Scripts
                                 Console.WriteLine("Would you like to purchase a shield for 15 GP?");
                                 Console.WriteLine();
                                 Console.WriteLine("Press 'Y' if yes or 'N' if not.");
-                                Console.WriteLine();
+                                Console.WriteLine();primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
                                 var purchaseShieldResponse = Console.ReadKey(true).Key;
                                 if (purchaseShieldResponse == ConsoleKey.Y)
                                 {
-                                    primaryCharacter.EquippedArmor = primaryCharacter.EquippedArmor.Append<string>("Shield").ToArray();
+                                    
                                     primaryCharacter.Currency["GP"] -= 15;
                                     Console.WriteLine("You have " + primaryCharacter.Currency["GP"] + " GP left.");
                                     Console.WriteLine();

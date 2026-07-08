@@ -52,6 +52,10 @@ Console.WriteLine();
 Console.WriteLine("<----------xxx ~*~ xxx---------->");
 Console.WriteLine();
 
-PrimaryCharacterCreation newCharacter = new PrimaryCharacterCreation();
+//PrimaryCharacterCreation newCharacter = new PrimaryCharacterCreation();
 
-newCharacter.CreateCharacter();
+//newCharacter.CreateCharacter();
+
+AddPartyMembers additionalCharacter = new AddPartyMembers();
+
+additionalCharacter.PartyMemberCreation();
